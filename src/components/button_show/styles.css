@@ -1,0 +1,15 @@
+.button_show{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 32px;
+    width: 41px;
+    border: 1px solid #CED4DA;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: #fff;
+    padding: 11px;
+}
+.active {
+    background-color: #F2F2F2;
+}

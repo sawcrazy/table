@@ -1,0 +1,17 @@
+.button_function{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 32px;
+    border: 2px solid #005BAA;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: #fff;
+    color: #005BAA;
+    padding: 11px;
+}
+
+.button_function_text{
+    font-size: 14px;
+    padding-left: 8px;
+}
