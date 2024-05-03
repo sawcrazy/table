@@ -24,7 +24,6 @@ export const ModalEdit =(props) => {
                     </button>
                 </div>
             </div>
-
         </div>
     );
 }

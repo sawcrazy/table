@@ -35,10 +35,14 @@ export const App = () =>{
 
         return () => clearInterval(timerID);
     }, []);
+
     const openModal = () =>{
         setOpenModalAdd(true);
     };
     const openModalDelet = () =>{
+        if(checked.length === 0) {
+            return;
+        }
         setOpenModalDelete(true);
     }
     const closeModal = () =>{
@@ -60,8 +64,11 @@ export const App = () =>{
         setChecked([...checked,id]);
     }
     const edit = () =>{
-        setOpenModalEdit(true);
         const newElement = infoTable.find(item => item.id === checked[0]);
+        if (!newElement){
+            return;
+        }
+        setOpenModalEdit(true);
         setElement(newElement);
         setData(newElement.data);
         setTime(newElement.time);
@@ -72,7 +79,7 @@ export const App = () =>{
         return infoTable.map((item)=>{
             return (
                 <tr>
-                    <td>
+                    <td className="first-column">
                         <input checked={checked.includes(item.id)} type="checkbox" className="custom-table-checkbox" onClick={()=>onChecked(item.id)}/>
                     </td>
                     <td>{item.data}</td>
@@ -112,19 +119,25 @@ export const App = () =>{
         setSource(value);
     }
     const deleteInfo = () =>{
+
         const del = infoTable.filter((item) => !checked.includes(item.id));
         setInfoTable(del);
+        setOpenModalDelete(false);
+        setChecked([]);
     }
     const save = ()=>{
-        const saveValue = infoTable.map((item) => {
+        const newInfoTable = infoTable.map((item) => {
             if(item.id === checked[0]){
-                item.data = data;
-                item.time = time;
-                item.source = sourceEdit;
-                return item
+                return {
+                    ...item,
+                    data,
+                    time,
+                    source: sourceEdit,
+                }
             }
             return item
         })
+        setInfoTable(newInfoTable);
         setOpenModalEdit(false);
 
     }
@@ -190,7 +203,6 @@ export const App = () =>{
                             Группировать по дате
                         </div>
                         <div>
-                            <input type="text" value="12312312"/>
                         </div>
                     </div>
                 </div>
@@ -199,7 +211,7 @@ export const App = () =>{
                     <table className="custom-table">
                         <thead>
                         <tr>
-                            <th>
+                            <th className="first-column">
                                 <input className="custom-table-checkbox" type="checkbox"/>
                             </th>
                             <th>Дата</th>
@@ -215,12 +227,12 @@ export const App = () =>{
                         </thead>
                         <tbody>
                         <tr>
-                            <td >
+                            <td className="first-column">
                                 <button className="table-button-add" onClick={openModal}>
                                     <img src={addIcon} alt=""/>
                                 </button>
                             </td>
-                            <td colSpan="10">
+                            <td colSpan="10" className="second-column">
                                 Добавить новые замеры
                             </td>
                         </tr>
@@ -279,6 +291,7 @@ export const App = () =>{
                 closeModal={closeModalEdit}
                 element={element}
                 save={save}
+                checked={checked}
             >
                 <div>
                     Дата
@@ -293,7 +306,7 @@ export const App = () =>{
                     Время
                     <input
                     className="modal-input"
-                    type="text"
+                    type="time"
                     value={time}
                     onChange={e => setTime(e.target.value)}
                     />
