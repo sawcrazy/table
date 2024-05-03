@@ -125,7 +125,7 @@ export const App = () =>{
             }
             return item
         })
-        console.log(saveValue);
+        setOpenModalEdit(false);
 
     }
     return (
